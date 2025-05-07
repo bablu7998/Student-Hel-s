@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentHelps - Donate One Rupee</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background-color: #ffffff;
+            color: #333;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em 2em;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        nav h1 {
+            color: #008000;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        nav button {
+            background-color: #008000;
+            color: white;
+            border: none;
+            padding: 0.6em 2em;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        .gallery {
+            position: relative;
+            width: calc(100% - 40px);
+            height: 80vh;
+            margin: 20px;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        .gallery img {
+            width: 100%;
+            height: 85vh;
+            object-fit: cover;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        .gallery img.active {
+            opacity: 1;
+        }
+        .content {
+            text-align: left;
+            padding: 1.2em;
+        }
+        .content h2 {
+            margin-bottom: 0.1em;
+            font-size: 2.5em;
+            color: #008000;
+        }
+        .content p {
+            margin-bottom: 0.9em;
+            font-size: 1.1em;
+            color: #555;
+        }
+        .content button {
+            background-color: #008000;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size:1.0em;
+            border-radius: 100px;
+            cursor: pointer;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            color: #1e1e1e;
+            z-index: 100;
+        }
+        .popup.active {
+            display: block;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #008000;
+            color: white;
+            padding: 5px 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .notification img {
+            width: 40px;
+            height: 40px;
+            border-radius: 15%;
+        }
+    </style>
+    <script>
+        function openInsta() {
+            window.open('https://www.instagram.com/__.bablu.__shaik', '_blank');
+        }
+        function openPaymentApp() {
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                const upiLink = 'upi://pay?pa=630548553@axl&pn=StudentHelpsStudent&am=1&cu=INR';
+                window.location.href = upiLink;
+            } else {
+                document.getElementById('popup').classList.add('active');
+            }
+        }
+        function closePopup() {
+            document.getElementById('popup').classList.remove('active');
+        }
+        function startGallery() {
+            let index = 0;
+            const images = document.querySelectorAll('.gallery img');
+            setInterval(() => {
+                images.forEach((img, i) => {
+                    img.classList.remove('active');
+                    if (i === index) img.classList.add('active');
+                });
+                index = (index + 1) % images.length;
+            }, 3000);
+        }
+        function randomNotification() {
+            const messages = [
+                'Craving food.',
+                'Dreaming of vacation.',
+                'Bored in class.',
+                'Looking for a study buddy.',
+                'Thinking about bunking.'
+            ];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            const img = document.createElement('img');
+            img.src = 'profile.jpg';
+            const text = document.createElement('span');
+            text.innerText = message;
+            notif.appendChild(img);
+            notif.appendChild(text);
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 5000);
+        }
+        window.onload = function() {
+            startGallery();
+            setInterval(randomNotification, 5000);
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <h1>StudentHelps.</h1>
+        <button onclick="openInsta()">Follow Us</button>
+    </nav>
+    <div class="gallery">
+        <img src="image1.jpg" class="active" alt="Photo 1">
+        <img src="image2.jpg" alt="Photo 2">
+        <img src="image3.jpg" alt="Photo 3">
+        <img src="image4.jpg" alt="Photo 4">
+    </div>
+    <div class="content">
+        <h2>Donate One Rupee, Save One Student</h2>
+        <p>Become a vital part of the StudentHelps community and empower students to achieve their dreams. By contributing just one rupee, you can directly support their educational journey and help them unlock their full potential. Join us today and make a tangible difference in the lives of aspiring learners.</p>
+        <button onclick="openPaymentApp()">Donate Now</button>
+    </div>
+    <div id="popup" class="popup">
+        <p>Please open this page on a mobile device to make a donation.</p>
+        <button onclick="closePopup()" style="
+  background-color: #008000; /* Green */
+  color: white;
+  padding: 8px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 10px 0px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+">Done</button>
+    </div>
+</body>
+</html>
