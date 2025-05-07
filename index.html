@@ -77,6 +77,7 @@
             border: none;
             padding: 15px 35px;
             font-size:1.0em;
+            margin-bottom: 35px;
             border-radius: 100px;
             cursor: pointer;
         }
@@ -118,13 +119,23 @@
             window.open('https://www.instagram.com/__.bablu.__shaik', '_blank');
         }
         function openPaymentApp() {
-            if (/Mobi|Android/i.test(navigator.userAgent)) {
-                const upiLink = 'upi://pay?pa=630548553@axl&pn=StudentHelpsStudent&am=1&cu=INR';
-                window.location.href = upiLink;
-            } else {
-                document.getElementById('popup').classList.add('active');
-            }
-        }
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        const upiLink = 'upi://pay?pa=630548553@axl&pn=StudentHelpsStudent&am=1&cu=INR';
+
+        // Try opening with PhonePe
+        const phonePeLink = 'phonepe://' + upiLink;
+        const paytmLink = 'paytm://' + upiLink;
+
+        // Open PhonePe first, then Paytm if PhonePe fails
+        window.location.href = phonePeLink;
+        setTimeout(() => {
+            window.location.href = paytmLink;
+        }, 1000);
+    } else {
+        document.getElementById('popup').classList.add('active');
+    }
+}
+
         function closePopup() {
             document.getElementById('popup').classList.remove('active');
         }
